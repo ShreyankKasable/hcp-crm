@@ -102,7 +102,6 @@ def run_agent(session_id: str, user_message: str) -> dict:
     config = {"configurable": {"thread_id": session_id}}
 
     # optional Langfuse tracing (enabled only if keys are present)
-    # optional Langfuse tracing (enabled only if keys are present)
     langfuse_client = None
     if os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY"):
         from langfuse import get_client
@@ -130,6 +129,9 @@ def run_agent(session_id: str, user_message: str) -> dict:
         if m.__class__.__name__ == "AIMessage" and getattr(m, "content", ""):
             assistant_text = m.content
             break
+
+    if langfuse_client:
+        langfuse_client.flush()
 
     return {
         "assistant_text": assistant_text or "Done.",
