@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16
+    container_name: hcp_crm_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: crm_user
+      POSTGRES_PASSWORD: crm_pass
+      POSTGRES_DB: hcp_crm
+    ports:
+      - "5432:5432"
+    volumes:
+      - hcp_crm_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U crm_user -d hcp_crm"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  hcp_crm_pgdata:

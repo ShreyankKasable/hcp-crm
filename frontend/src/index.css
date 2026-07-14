@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f1f3f4;
+    color: #202124;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* When the agent fills a field, briefly highlight it. */
+  @keyframes aiFill {
+    0% { background-color: #d2e3fc; }
+    100% { background-color: #fff; }
+  }
+  
+  .ai-filled {
+    animation: aiFill 1.2s ease-out;
+  }
+  
+  input, select, textarea {
+    font-family: inherit;
+  }
+  
+  ::placeholder {
+    color: #9aa0a6;
+  }
