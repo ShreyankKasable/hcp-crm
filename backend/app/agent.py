@@ -102,13 +102,14 @@ def run_agent(session_id: str, user_message: str) -> dict:
     config = {"configurable": {"thread_id": session_id}}
 
     # optional Langfuse tracing (enabled only if keys are present)
+    # optional Langfuse tracing (enabled only if keys are present)
+    langfuse_client = None
     if os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY"):
-        try:
-            from langfuse.langchain import CallbackHandler
-            config["callbacks"] = [CallbackHandler()]
-            config["metadata"] = {"langfuse_session_id": session_id}
-        except Exception:
-            pass
+        from langfuse import get_client
+        from langfuse.langchain import CallbackHandler
+        config["callbacks"] = [CallbackHandler()]
+        config["metadata"] = {"langfuse_session_id": session_id}
+        langfuse_client = get_client()
 
     # figure out where this turn's new messages will start
     try:
